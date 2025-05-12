@@ -106,13 +106,14 @@ fun TodoItemCard(
     }
 }
 
+
 @Preview
 @Composable
 fun TodoItemCardPreview(){
     TodoItemCard(
         todo = TodoItem(
-            id = 1, title ="Sample todo", description = "Sample text",
-            imageUri = "null", tasker = "Robbllezze", isCompleted = false
+            id = 1, title ="SAMPLE TO", description = "Sample text",
+            imageUri = null, tasker = "Robbllezze", isCompleted = false
         ),
         onCompleteChange = {
                 isChecked -> println("Checked: $isChecked")

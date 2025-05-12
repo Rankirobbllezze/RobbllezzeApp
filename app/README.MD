@@ -25,3 +25,8 @@ Steps to work with the room persistence database library
 a. A single source of truth your data
 b. An abstraction layer between the data source
 c. The component to handle all data operations
+6. To provide the viewModel on compilation we will add a dependency manager HILT
+To add HILT  to th project :
+   a. In the build.gradle project level add this hilt plugin :
+   id("com.google.dagger.hilt.android") version "2.56.1" apply false
+7. 

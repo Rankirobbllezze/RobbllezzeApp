@@ -4,14 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.robbllezze.data.model.TodoItem
 import com.example.robbllezze.data.repository.TodoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DashboardViewModel(
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
     // mock data // hard coded  [ {} , {}      ]
@@ -74,6 +77,18 @@ class DashboardViewModel(
             val todo = repository.getTodoById(todoId) ?: return@launch
             val updateTodo = todo.copy(isCompleted = !todo.isCompleted)
             repository.updateTodo(updateTodo)
+        }
+    }
+
+    //function to add data
+    fun addToDo (title: String, description: String, tasker:String){
+        viewModelScope.launch {
+            //we create the new item
+            val newTodo = TodoItem(
+                id = 0, title = title, description = description, imageUri = null,
+                tasker = tasker, isCompleted = false
+            )
+            repository.insertTodo(newTodo)
         }
     }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722212551905",
+    "project_id": "robbllezze",
+    "storage_bucket": "robbllezze.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722212551905:android:b1d12cd759f7267d78cba0",
+        "android_client_info": {
+          "package_name": "com.example.robbllezze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiHrBkiQJH89IVyUfGWnO3ys-gzCTbq-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
