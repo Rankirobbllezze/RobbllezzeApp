@@ -22,6 +22,7 @@ fun TodoNavGraph(navController: NavHostController){
         composable("dashboard"){
             DashboardScreen(
                 //properties for the composable
+                navController
             )
 
         }
