@@ -29,4 +29,14 @@ c. The component to handle all data operations
 To add HILT  to th project :
    a. In the build.gradle project level add this hilt plugin :
    id("com.google.dagger.hilt.android") version "2.56.1" apply false
-7. 
+
+
+
+
+
+
+
+
+
+### FIREBASE CRUD
+1, ADD A DEPENDANCY

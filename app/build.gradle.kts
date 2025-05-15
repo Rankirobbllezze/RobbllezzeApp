@@ -72,6 +72,12 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
 //    firebase authentication
     implementation("com.google.firebase:firebase-auth-ktx")
+//    FIREBASE DATABASE
+    implementation("com.google.firebase:firebase-database-ktx")
+    //firebase storage
+    implementation("com.google.firebase:firebase-storage-ktx")
+// coil : image loader
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)

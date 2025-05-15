@@ -10,10 +10,11 @@ import androidx.room.PrimaryKey
 //define the class as a data by adding the data keyword
 data class TodoItem (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String,
-    val description: String,
-    val imageUri : String?,
-    val tasker: String,
+    val firebase_id: Int = 0,
+    val title: String = "",
+    val description: String = "",
+    val imageUri : String? = null,
+    val tasker: String = "",
     val createdAt: Long = System.currentTimeMillis(), // capture time
     val isCompleted: Boolean = false
 

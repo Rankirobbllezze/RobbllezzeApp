@@ -8,7 +8,7 @@ import com.example.robbllezze.data.model.TodoItem
 //Add annotations database to make this class as the database migration layer
 @Database(
     entities = [TodoItem::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){

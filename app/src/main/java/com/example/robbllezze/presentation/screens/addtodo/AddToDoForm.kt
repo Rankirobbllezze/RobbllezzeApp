@@ -1,5 +1,9 @@
 package com.example.robbllezze.presentation.screens.addtodo
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.content.MediaType.Companion.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,8 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.example.robbllezze.data.repository.MockToDoRepository
 import com.example.robbllezze.data.repository.TodoRepository
 import com.example.robbllezze.presentation.screens.dashboard.DashboardViewModel
@@ -32,6 +38,15 @@ fun AddToDoForm(
     onDismiss: () -> Unit
 ){
     //Variable to save inputs
+    val context = LocalContext.current
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    //define a reference from activity launcher
+    //this allows capture of multimedia files from other apps
+    val imagePickerLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent()) { uri: Uri? -> imageUri = uri }
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var tasker by remember { mutableStateOf("") }
@@ -61,6 +76,19 @@ fun AddToDoForm(
             label = { Text("Tasker Name")},
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
+        //button to pick image
+        Button(onClick = {
+//            imagePickerLauncher.launch("*")
+            imagePickerLauncher.launch("image/*")
+        }) { Text(text = "Select Image")}
+        //image container
+        //rememberAsyncImagePainter : this is from the coil lib. allowing us to load images to
+        //image containers. it - imageUri selected
+        imageUri?.let{
+            Image(painter = rememberAsyncImagePainter(it),
+                contentDescription = null)
+        }
+
         Row(modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween){
             Button(onClick = onDismiss,
@@ -69,7 +97,7 @@ fun AddToDoForm(
             }
             Button(onClick = {
                 if(title.isNotBlank()){
-                    viewModel.addToDo(title,description,tasker)
+                    viewModel.addToDO(title,description,tasker,imageUri)
                     onDismiss()
                 }
             }, enabled = title.isNotBlank()) {

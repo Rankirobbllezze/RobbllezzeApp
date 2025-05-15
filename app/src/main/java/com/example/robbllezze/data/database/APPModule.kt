@@ -2,6 +2,8 @@ package com.example.robbllezze.data.database
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.robbllezze.data.dao.TodoDAO
 import com.example.robbllezze.data.repository.TodoRepository
 import com.example.robbllezze.data.repository.TodoRepositoryImpl
@@ -15,6 +17,16 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object APPModule {
+    //migration functionality
+    private val MIGRATION_1_2 = object : Migration(1,2){
+        override fun migrate(db: SupportSQLiteDatabase) {
+//            super.migrate(db)
+            db.execSQL(
+                "ALTER TABLE todos ADD COLUMN firebase_id " + "INTEGER NOT NULL DEFAULT 0"
+            )
+        }
+
+    }
     @Provides
     @Singleton
     fun provideToDoRepository(dao: TodoDAO) : TodoRepository{
@@ -28,7 +40,7 @@ object APPModule {
             context,
             AppDatabase::class.java,
             "Todo_db"
-        ).build()
+        ).addMigrations(MIGRATION_1_2).build()
     }
     @Provides
     fun provideTodoDao(database: AppDatabase): TodoDAO {

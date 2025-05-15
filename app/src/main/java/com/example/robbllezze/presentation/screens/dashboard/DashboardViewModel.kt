@@ -1,14 +1,13 @@
 package com.example.robbllezze.presentation.screens.dashboard
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.robbllezze.data.model.TodoItem
 import com.example.robbllezze.data.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,15 +17,15 @@ class DashboardViewModel @Inject constructor(
     private val repository: TodoRepository
 ) : ViewModel() {
     // mock data // hard coded  [ {} , {}      ]
-//    private val mockRobbllezze = listOf(
-//        TodoItem(
-//            id = 1,
-//            title = "Buy Groceries",
-//            description = "Milk, Eggs , and Bread",
-//            imageUri = null,
-//            tasker = "Joseph",
-//            isCompleted = false
-//        ) ,
+//    private val mockToDO = listOf(
+//         TodoItem(
+//             id = 1,
+//             title = "Buy Groceries",
+//             description = "Milk, Eggs , and Bread",
+//             imageUri = null,
+//             tasker = "Joseph",
+//             isCompleted = false
+//         ) ,
 //        TodoItem(
 //            id = 2,
 //            title = "Finish Android Phase",
@@ -47,16 +46,15 @@ class DashboardViewModel @Inject constructor(
     // Create a stateflow : this is simply making the above data publicly visible to all
     // composables
     //1. Keep the mutable state flow private
-//    private val _todos = MutableStateFlow(mockRobbllezze)
+//    private val _todos = MutableStateFlow(mockToDO)
 //    // 2. Expose as a public state to composables
 //    val todos = _todos.asStateFlow()
-    //GETTING THE DATA FROM THE REPOSITORY LAYER
+    // GETTING THE DATA FROM THE REPOSITORY LAYER
     val todos: StateFlow<List<TodoItem>> = repository.getAllTodos()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
-
         )
     // [ {} , {} , { }  ]
     // functions working on the data being observed
@@ -65,8 +63,8 @@ class DashboardViewModel @Inject constructor(
         // 1. Making a reference to all todos
         // 2. Reassign the todos value according to the new state for
         // isCompleted
-        // 3. this step will allow new renders on a todoItem change
-        // 4. it orTodo' references a single todoItem
+        // 3. this step will allow new renders on a todoitem change
+        // 4. itortodo' references a single todoitem
 //        _todos.value = _todos.value.map{ todo ->
 //            if(todo.id == todoId) todo.copy(isCompleted = !todo.isCompleted)
 //            else todo
@@ -80,15 +78,24 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
-    //function to add data
-    fun addToDo (title: String, description: String, tasker:String){
+    // function to add data
+    fun addToDO (title: String, description: String,
+                 tasker:String, imageUri: Uri?){
         viewModelScope.launch {
-            //we create the new item
+            var imageUrl: String? = null
+            if(imageUri != null){
+//                imageUrl = repository.uploadImageToFirebase(imageUri)
+            }
+            // we create the new Item
             val newTodo = TodoItem(
-                id = 0, title = title, description = description, imageUri = null,
+                id = 0, title = title,
+                description = description, imageUri = imageUrl,
                 tasker = tasker, isCompleted = false
             )
+            // room db insert
             repository.insertTodo(newTodo)
+            //firebase insert
+            repository.uploadToFirebase(newTodo)
         }
     }
 
