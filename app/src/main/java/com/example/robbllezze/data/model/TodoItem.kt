@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 //define the class as a data by adding the data keyword
 data class TodoItem (
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val firebase_id: Int = 0,
+    val firebase_id: String = "",
     val title: String = "",
     val description: String = "",
     val imageUri : String? = null,

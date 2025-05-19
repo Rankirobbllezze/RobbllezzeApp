@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -24,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,12 +39,13 @@ import com.example.robbllezze.data.model.TodoItem
 // IN DIFFERENT SCREENS
 // presentation/components/TodoItemCard.kt
 
-fun onCompleteChange(){}
 
 @Composable
 fun TodoItemCard(
     todo: TodoItem,
-    onCompleteChange: (Boolean) -> Unit
+    onCompleteChange: (Boolean) -> Unit,
+    onEditClick: (TodoItem) -> Unit,
+    onDeleteClick: (TodoItem) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -50,7 +54,7 @@ fun TodoItemCard(
             .clickable {},
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Row (
+        Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -72,7 +76,7 @@ fun TodoItemCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text =todo.description,
+                    text = todo.description,
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -84,16 +88,37 @@ fun TodoItemCard(
                     Icon(
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = "Assignee",
-                        modifier = Modifier.size(16.dp) )
+                        modifier = Modifier.size(16.dp)
+                    )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = todo.tasker,
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(start = 4.dp)
+                ) {
+                    Button(onClick = { onEditClick(todo) }) {
+                        Text(text = "Edit", color = MaterialTheme.colorScheme.onPrimary)
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Button(
+                        onClick = { onDeleteClick(todo) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                    ) {
+                        Text(text = "Delete", color = MaterialTheme.colorScheme.onPrimary)
+                    }
+
+                }
             }
+
             Image(
-                painter = painterResource(R.drawable.transaction),
+                painter = painterResource(R.drawable.ic_launcher_background),
                 contentDescription = null,
                 modifier = Modifier
                     .size(48.dp)
@@ -101,29 +126,33 @@ fun TodoItemCard(
                 contentScale = ContentScale.Crop
             )
 
-
-
-
-
-
         }
     }
 }
 
-
 @Preview
 @Composable
-fun TodoItemCardPreview(){
+fun TodoItemCardPreview() {
     TodoItemCard(
         todo = TodoItem(
-            id = 1, title ="SAMPLE TO", description = "Sample text",
-            imageUri = null, tasker = "Robbllezze", isCompleted = false
+            id = 1, title = "sample todo", description = "sample text",
+            imageUri = null, tasker = "joseph", isCompleted = false
         ),
-        onCompleteChange = {
-                isChecked -> println("Checked: $isChecked")
-        }
+        onCompleteChange = { isChecked ->
+            println("Checked: $isChecked")
+        },
+        onEditClick = { todo ->
+            println("Edit: ${todo.title}")
+        },
+        onDeleteClick = { todo ->
+            println("Delete: ${todo.title}")}
     )
 }
+
+
+
+
+
 
 
 
