@@ -33,37 +33,40 @@ class TodoRepositoryImpl(private val todoDao: TodoDAO) :
         return todoDao.getAllTodos()
     }
 
-    override  fun fetchtodosFromFirebase(): Flow<List<TodoItem>> = callbackFlow{
-        val dbref = FirebaseDatabase.getInstance().reference.child("todos")
-        // create a listener to listen in every change in our child ref
+    override fun fetchtodosFromFirebase(): Flow<List<TodoItem>>
+            = callbackFlow{
+        val dbref = FirebaseDatabase.getInstance().reference
+            .child("todos")
+        // create a listener to listen to any change in our child ref.
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-               val todos = mutableListOf<TodoItem>()
+                val todos = mutableListOf<TodoItem>()
                 for (child in snapshot.children){
                     val todo = child.getValue(TodoItem::class.java)
                     todo?.let {todos.add(it)}
                 }
-                //corountines flow , trysend handles any exception
-                //encountered in process
+                // corountines flow , trysend handles any exception
+                // encountered in process
                 trySend(todos).isSuccess
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 close(error.toException())
             }
-
         }
-        //add the listener to the db reference
+        // add the listener to the db reference
         dbref.addValueEventListener(listener)
         // if app is not launched close the connection
         awaitClose{dbref.removeEventListener(listener)}
+
     }
-//            = flow{
+// .get() listens for data once , static implementation for fetching data
+//    override  fun fetchtodosFromFirebase(): Flow<List<TodoItem>>
+//    = flow{
 //        val dbref = FirebaseDatabase.getInstance()
 //            .reference.child("todos")
 //        // snapshot , reads the data currently
-//        val snapshot = dbref.get().await()
+//        val snapshot = dbref.get().await()  //
 //        val todos  = mutableListOf<TodoItem>()
 //        // now populate the above list ref. with the snapshot details
 //        for(child in snapshot.children){
@@ -150,6 +153,14 @@ class TodoRepositoryImpl(private val todoDao: TodoDAO) :
     }
 
 }
+
+
+
+
+
+
+
+
 
 
 
