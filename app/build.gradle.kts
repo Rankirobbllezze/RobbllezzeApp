@@ -80,7 +80,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.ret:converter-gso:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)

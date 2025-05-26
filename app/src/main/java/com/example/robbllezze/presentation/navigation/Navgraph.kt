@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.robbllezze.presentation.components.LoginScreen
 import com.example.robbllezze.presentation.components.SignUpScreen
+import com.example.robbllezze.presentation.screens.apiscreens.ApiDashboard
 import com.example.robbllezze.presentation.screens.dashboard.DashboardScreen
 
 // INSIDE THIS FILE WE WILL DEFINE NAVCONTROLLER : THIS IS USED TO NAVIGATE
@@ -25,6 +26,11 @@ fun TodoNavGraph(navController: NavHostController){
                 navController
             )
 
+        }
+        composable("apiroute"){
+            ApiDashboard(
+                navController
+            )
         }
         // here will define the addtoDo composable
 

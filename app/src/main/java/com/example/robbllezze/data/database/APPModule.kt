@@ -5,8 +5,10 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.robbllezze.data.dao.TodoDAO
+import com.example.robbllezze.data.repository.ApiRepository
 import com.example.robbllezze.data.repository.TodoRepository
 import com.example.robbllezze.data.repository.TodoRepositoryImpl
+import com.example.robbllezze.data.services.TaskApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +48,12 @@ object APPModule {
     fun provideTodoDao(database: AppDatabase): TodoDAO {
         return database.todoDao()
     }
+    //INSTANCES FOR API PROCESSES
+    @Provides
+    @Singleton
+    fun provideApiService(): TaskApiService = TaskApiService.create()
+
+    @Provides
+    @Singleton
+    fun provideApiRepository(apiService: TaskApiService) : ApiRepository = ApiRepository(apiService)
 }
