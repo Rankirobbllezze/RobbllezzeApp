@@ -56,6 +56,8 @@ fun ApiDashboard(
                 color = MaterialTheme.colorScheme.error
             )
         }
+        //button to simulate the post proccess
+        ApiTaskButton(navController,viewModel)
         // list of tasks from api
         LazyColumn {
             items(tasks) { task  ->

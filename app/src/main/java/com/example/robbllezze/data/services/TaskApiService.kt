@@ -12,13 +12,13 @@ interface TaskApiService {
     // add annotations to represent the HTTP method
     @GET("api/tasks")
     suspend fun getTasks(): List<Task>
-    @POST("api/tasks")
+    @POST("api/tasks/")
     suspend fun createTask(@Body task: CreateTaskRequest) : Task
 
     // companion object : this object is accessible in any class
     // implementing the interface
     companion object{
-        private val base_url = "https://5235-197-237-118-180.ngrok-free.app/" // server link , ngrok link
+        private val base_url = "https://0b8c-197-237-118-180.ngrok-free.app" // server link , ngrok link
         // function to create connection to endpoint
         fun create(): TaskApiService {
             // return retrofit which set's up our network communication

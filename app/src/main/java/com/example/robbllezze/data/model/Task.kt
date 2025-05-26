@@ -7,5 +7,6 @@ data class Task(
     val title: String,
     val completed: Boolean,
     val created_at: String? = null,
-    val user: Int? = null
+    val user: Int? = null,
+    val tasker_detail: Int
 )
