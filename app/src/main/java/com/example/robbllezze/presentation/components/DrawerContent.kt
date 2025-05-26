@@ -1,6 +1,5 @@
 package com.example.robbllezze.presentation.components
 
-import android.R.attr.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,24 +17,28 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 
-//this is the side menu content items and navigation elements
+// this is the side menu content items and navigation elements
 @Composable
 fun DrawerContent(
     onNavigateToHome: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNavigateToApi: () -> Unit
 ){
     Surface(
-        modifier = Modifier.width(200.dp).fillMaxHeight()
+        modifier = Modifier.width(280.dp).fillMaxHeight()
             .padding(top = 64.dp, bottom = 16.dp)
-            .clip(RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp))
+            .clip(RoundedCornerShape(topEnd = 16.dp,
+                bottomEnd = 16.dp))
             .shadow(4.dp),
         color = MaterialTheme.colorScheme.surface
     ) {
-        Column(modifier = Modifier.padding(top = 16.dp,
-            start = 24.dp, end = 16.dp).fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)) {
+        Column(modifier  = Modifier.padding(top = 16.dp,
+            start = 24.dp, end = 16.dp )
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+        ) {
             Text(
-                text = "Menu",
+                text  = "Menu",
                 color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -47,12 +50,28 @@ fun DrawerContent(
                     .padding(vertical = 12.dp)
             )
             Text(
-                text = "LogOut",
+                text = "Api Screen",
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.clickable { onNavigateToApi() }
+                    .padding(vertical = 12.dp)
+            )
+            Text(
+                text = "Logout",
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.clickable { onLogout() }
                     .padding(vertical = 12.dp)
             )
-        }
 
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+

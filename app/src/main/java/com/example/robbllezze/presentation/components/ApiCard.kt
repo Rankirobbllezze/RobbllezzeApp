@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.robbllezze.R
+import com.example.robbllezze.data.model.Task
 import com.example.robbllezze.data.model.TodoItem
 
 // IN THIS FILE WE WILL DEFINE A TODOITEMCARD COMPOSABLE THAT WILL BE REUSABLE
@@ -92,7 +93,7 @@ fun ApiCard(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = todo.tasker,
+                        text = todo.tasker.username,
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
@@ -101,14 +102,14 @@ fun ApiCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(start = 4.dp)
                 ) {
-                    Button(onClick = { onEditClick(todo) }) {
+                    Button(onClick = {  }) {
                         Text(text = "Edit", color = MaterialTheme.colorScheme.onPrimary)
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Button(
-                        onClick = { onDeleteClick(todo) },
+                        onClick = {  },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                     ) {
                         Text(text = "Delete", color = MaterialTheme.colorScheme.onPrimary)
@@ -132,7 +133,7 @@ fun ApiCard(
 
 @Preview
 @Composable
-fun TodoItemCardPreview() {
+fun ApiCardPreview() {
     TodoItemCard(
         todo = TodoItem(
             id = 1, title = "sample todo", description = "sample text",
@@ -148,3 +149,16 @@ fun TodoItemCardPreview() {
             println("Delete: ${todo.title}")}
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,7 +37,7 @@ import com.example.robbllezze.presentation.screens.addtodo.EditToDoForm
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
-// THIS FILE WILL CONTAIN THE COMPOSABLE ELEMENTS TO DISPLAY MY LIST OF TODos
+// THIS FILE WILL CONTAIN THE COMPOSABLE ELEMENTS TO DISPLAT MY LIST OF TODos
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
@@ -73,6 +73,9 @@ fun DashboardScreen(
                         popUpTo("dashboard")
                         {inclusive = true}
                     }
+                },
+                onNavigateToApi = {
+                    navController.navigate("apiroute")
                 }
             )
         } ,
@@ -106,8 +109,10 @@ fun DashboardScreen(
             }
         ) { padding ->
 
-            //buton -> redirect to the screen with the list from the api
-            Button(onClick = { navController.navigate("apiroute") }) {
+            // button -> redirect to the screen with the list from
+            // the api
+            Button(onClick =
+                {  navController.navigate("apiroute")    }) {
                 Text("Go to List Screen")
             }
             LazyColumn(modifier = Modifier.padding(padding)) {
@@ -172,6 +177,17 @@ fun DashboardScreen(
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
