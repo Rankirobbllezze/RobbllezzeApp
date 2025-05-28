@@ -1,5 +1,7 @@
 package com.example.robbllezze.presentation.components
 
+import android.R.attr.maxLines
+import android.R.style
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -76,8 +78,9 @@ fun ApiCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
+
                 Text(
-                    text = todo.tasker.username,
+                    text = todo.tasker_detail?.username ?: "Unassigned",
                     style = MaterialTheme.typography.bodyMedium,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
@@ -93,7 +96,7 @@ fun ApiCard(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = todo.tasker.username,
+                        text = todo.tasker_detail?.username ?: "Unassigned",
                         style = MaterialTheme.typography.labelSmall
                     )
                 }

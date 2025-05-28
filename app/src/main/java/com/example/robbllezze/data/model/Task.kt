@@ -3,10 +3,11 @@ package com.example.robbllezze.data.model
 //in json i.e. the backed that can be null
 data class Task(
     val id: Int? = null,
-    val tasker: Tasker,
+    val tasker: Int?,          // or remove if unused
+    val tasker_detail: Tasker?,    // use this instead with a null check
     val title: String,
     val completed: Boolean,
     val created_at: String? = null,
     val user: Int? = null,
-    val tasker_detail: Int
+
 )

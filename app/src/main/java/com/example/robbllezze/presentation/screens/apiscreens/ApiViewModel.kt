@@ -25,12 +25,19 @@ class ApiViewModel(private val
     // reference to the data loading state i.e is it loaded or not
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
-    // reference to any occurance of an error
+    // reference to any occurrence of an error
     private val _error = mutableStateOf<String?>(null)
     val error: State<String?> = _error
     // reference to the post process i.e. whether its successful or not
     private val _taskCreationState = mutableStateOf<Result<Task>?>(null)
     val taskCreationState: State<Result<Task>?> = _taskCreationState
+    //update
+    private val _taskUpdateState = mutableStateOf<Result<Task>?>(null)
+    val taskUpdateState: State<Result<Task>?> = _taskUpdateState
+    //delete
+    private val _taskDeleteState = mutableStateOf<Result<Boolean>?>(null)
+    val taskDeleteState: State<Result<Boolean>?> = _taskDeleteState
+
 
     // function fetch our tasks
     fun fetchTasks(){
@@ -51,7 +58,7 @@ class ApiViewModel(private val
         viewModelScope.launch {
             try {
                 // define our new task
-                val request = CreateTaskRequest(tasker_detail = taskerId, title = title, completed = completed,
+                val request = CreateTaskRequest(tasker = taskerId, title = title, completed = completed,
                     user =  userId)
                 //send using retrofit and capture the response from retrofit
                 val task = repository.createTask(request)
@@ -62,6 +69,30 @@ class ApiViewModel(private val
             }
         }
 
+    }
+    //delete
+    fun deleteTask(id: Int){
+        viewModelScope.launch {
+            try {
+                repository.deleteTask(id)
+                _taskDeleteState.value = Result.success(true)
+
+            } catch (e: Exception){
+                _taskDeleteState.value = Result.failure(e)
+
+            }
+        }
+    }
+    //update
+    suspend fun updateTask(id:Int, taskerId: Int, title: String, completed: Boolean, userId: Int? = null){
+        try {
+            val request = CreateTaskRequest(tasker = taskerId, title = title, completed = completed
+            , user = userId )
+            val updateTask = repository.updateTask(id, request)
+            _taskUpdateState.value = Result.success(updateTask)
+        } catch (e: Exception){
+            _taskUpdateState.value = Result.failure(e)
+        }
     }
 
 

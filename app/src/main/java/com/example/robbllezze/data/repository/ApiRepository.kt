@@ -11,4 +11,10 @@ class ApiRepository(private val apiService: TaskApiService) {
     suspend fun createTask(task: CreateTaskRequest) : Task {
         return apiService.createTask(task)
     }
+    suspend fun updateTask(id: Int, task: CreateTaskRequest) : Task{
+        return apiService.updateTask(id, task)
+    }
+    suspend fun deleteTask(id: Int) {
+        return apiService.deleteTask(id)
+    }
 }
